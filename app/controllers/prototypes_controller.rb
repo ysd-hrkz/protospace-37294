@@ -1,13 +1,13 @@
 class PrototypesController < ApplicationController
-before_action :authenticate_user!, only: [:new, :edit, :destroy, :update]
-before_action :move_to_index, only: [:edit, :update]
+  before_action :authenticate_user!, only: [:new, :edit, :destroy, :update]
+  before_action :move_to_index, only: [:edit, :update]
 
   def index
     @prototype = Prototype.all
   end
 
   def new
-    @prototypes = Prototype.new
+    @prototype = Prototype.new
   end
 
   def create
