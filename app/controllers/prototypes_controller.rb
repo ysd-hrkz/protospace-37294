@@ -1,13 +1,13 @@
 class PrototypesController < ApplicationController
 before_action :authenticate_user!, only: [:new, :edit, :destroy, :update]
-before_action :move_to_index, except: [:index, :show]
+before_action :move_to_index, only: [:edit, :update]
 
   def index
     @prototype = Prototype.all
   end
 
   def new
-    @prototype = Prototype.new
+    @prototypes = Prototype.new
   end
 
   def create
@@ -27,6 +27,9 @@ before_action :move_to_index, except: [:index, :show]
 
   def edit
     @prototype = Prototype.find(params[:id])
+    unless @prototype.user.id == current_user.id
+      redirect_to action: :index
+    end
   end
 
   def update
@@ -51,7 +54,7 @@ before_action :move_to_index, except: [:index, :show]
   end
 
   def move_to_index
-    unless user_signed_in? == current_user.name
+    unless user_signed_in? 
       redirect_to action: :index
     end
   end
